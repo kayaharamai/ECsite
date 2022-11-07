@@ -158,35 +158,7 @@
       "id": 2
     }
   ],
-  "cartItems": [
-    {
-      "img": "/img/15.jpg",
-      "name": "追い鰹チャーシュー",
-      "price": 1100,
-      "quantity": 1,
-      "options": [],
-      "subtotal": 1100,
-      "id": 1
-    },
-    {
-      "img": "/img/10.jpg",
-      "name": "旨辛味噌麺",
-      "price": 800,
-      "quantity": 1,
-      "options": [],
-      "subtotal": 800,
-      "id": 2
-    },
-    {
-      "img": "/img/10.jpg",
-      "name": "旨辛味噌麺",
-      "price": 800,
-      "quantity": 1,
-      "options": [],
-      "subtotal": 800,
-      "id": 3
-    }
-  ],
+  "cartItems": [],
   "payStatus": [
     {
       "pay": "2:入金済",
