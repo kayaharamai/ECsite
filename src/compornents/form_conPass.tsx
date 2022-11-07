@@ -1,32 +1,43 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/register_user.module.css'
-import React, { useEffect } from "react";
-import PassForm from "./register_user_form_pass";
+import React, { ChangeEvent, useEffect } from "react";
+import PassForm from "./form_pass";
 
 export const conPassJudge = (conPassStatus: any, passValue: any, conPassValue: any) => {
 
-  if (conPassStatus === "empty") {
+
+  if (conPassStatus === "empty" || conPassStatus === "init") {
     let tag = document.getElementsByClassName("control-label")[6] as HTMLElement;
     tag.style.display = " inline-block"
     tag.innerHTML = "確認用パスワードを入力してください"
-  } else {
-    if (passValue !== conPassValue) {
-      let tag = document.getElementsByClassName("control-label")[6] as HTMLElement;
-      tag.style.display = "inline-block"
-      tag.innerHTML = "パスワードと確認用パスワードが不一致です"
-    }
+  } 
+
+  if (conPassStatus === "pass-mismatch") {
+    let tag = document.getElementsByClassName("control-label")[6] as HTMLElement;
+    tag.style.display = "inline-block"
+    tag.innerHTML = "パスワードと確認用パスワードが不一致です"
   }
+
 
 }
 
 export const ConPassForm = (props: any) => {
 
-    useEffect(() => {
+  const onChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
+
+    let conPassValue = ev.target.value
+    props.SetConPassValue(conPassValue);
       props.SetConPassStatus("ok")
-      if (!props.conPassValue) {
+      if (!conPassValue) {
         props.SetConPassStatus("empty")
       }
-    })
+
+      if(conPassValue !== props.passValue){
+        props.SetConPassStatus("pass-mismatch")
+      }
+      
+      console.log(`conPass/conpass: ${conPassValue} pass: ${props.passValue}`)
+  }
 
 
   return (
@@ -48,9 +59,7 @@ export const ConPassForm = (props: any) => {
           id="inputConfirmationPassword"
           className="form-control form-control-lg "
           placeholder="確認用パスワード"
-          onChange={(ev) => {
-              props.SetConPassValue(ev.target.value);
-          }}
+          onChange={onChangeHandler}
         />
       </div>
     </>

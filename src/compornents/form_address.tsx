@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/register_user.module.css'
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 
 export const addrJudge = (addrStatus: any) => {
-  if (addrStatus === "empty") {
+  if (addrStatus === "empty" || addrStatus === "init") {
     let tag = document.getElementsByClassName("control-label")[3] as HTMLElement;
     tag.style.display = "inline-block"
     tag.innerHTML = "住所を入力してください"
@@ -12,14 +12,17 @@ export const addrJudge = (addrStatus: any) => {
 
 export const AddrForm = (props: any) => {
 
-    useEffect(() => {
-      props.SetAddrStatus("ok")
+  const onChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
 
-      if (!props.addrValue) {
+    let addrValue = ev.target.value
+    props.SetAddrValue(addrValue);
+    
+         props.SetAddrStatus("ok")
+
+      if (!addrValue) {
         props.SetAddrStatus("empty")
       }
-    })
-
+    }
 
   return (
     <>
@@ -39,9 +42,9 @@ export const AddrForm = (props: any) => {
           id="inputAddress"
           className="form-control form-control-lg "
           placeholder="住所"
-          onChange={(ev) => {
-              props.SetAddrValue(ev.target.value);
-          }}
+          onChange={onChangeHandler}
+          defaultValue={props.addrValue}
+          autoComplete="street-address"
         />
       </div>
     </>
