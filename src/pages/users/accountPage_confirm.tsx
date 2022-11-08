@@ -62,7 +62,7 @@ export const Show: FC = memo(() => {
         <div className='container'>
           <Title title="基本情報の変更" />
 
-          <h1>Error!</h1>
+          <h1></h1>
 
         </div>
 
