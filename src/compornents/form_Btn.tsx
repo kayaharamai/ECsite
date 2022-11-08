@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import style from "../styles/register_user.module.css";
 
 
-export const Btn = (props: { zipStatus: string, zipValue: string , SetAddrValue: any }) => {
+export const Btn = (props: { zipStatus: string, zipValue: string , SetAddrValue: any , SetAddrStatus: any}) => {
     return (
     <input 
     type="button" 
@@ -24,11 +24,13 @@ export const Btn = (props: { zipStatus: string, zipValue: string , SetAddrValue:
           let tag = document.getElementsByClassName("control-label")[3] as HTMLElement;
           tag.style.display = "none"
           props.SetAddrValue(getAddrId.value)
+          props.SetAddrStatus("ok")
         })
         .catch((error) => {
           let tag = document.getElementsByClassName("control-label")[2] as HTMLElement;;
           tag.style.display = "inline-block"
           tag.innerHTML = "この郵便番号は存在しません"
+          console.log("存在しません")
         });
       }
 
@@ -42,12 +44,14 @@ export const Btn = (props: { zipStatus: string, zipValue: string , SetAddrValue:
         let tag = document.getElementsByClassName("control-label")[2] as HTMLElement;
         tag.style.display = "inline-block"
         tag.innerHTML = "郵便番号を入力してください"
+        console.log("入力してください")
       }
 
-      if(props.zipStatus === "format-incorect"){
+      if(props.zipStatus === "format-incorrect"){
         let tag = document.getElementsByClassName("control-label")[2] as HTMLElement;
         tag.style.display = "inline-block"
         tag.innerHTML = "郵便番号はXXX-XXXXの形式で入力してください"
+        console.log("正しい形式で入力してください")
       }
 
     }}

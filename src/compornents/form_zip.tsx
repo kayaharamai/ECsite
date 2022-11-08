@@ -1,10 +1,10 @@
-import { Btn } from "./register_user_form_Btn"
+import { Btn } from "./form_Btn"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/register_user.module.css'
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 
 export const zipJudge = (zipStatus: any) => {
-  if (zipStatus === "empty") {
+  if (zipStatus === "empty" || zipStatus === "init") {
     let tag = document.getElementsByClassName("control-label")[2] as HTMLElement;
     tag.style.display = "inline-block"
     document.getElementsByClassName("control-label")[2].innerHTML = "郵便番号を入力してください"
@@ -25,14 +25,16 @@ export const zipJudge = (zipStatus: any) => {
 
 export const ZipForm = (props: any) => {
 
-    useEffect(() => {
+  const onChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
 
-      if (!props.zipValue) {
+    let zipValue = ev.target.value
+    props.SetZipValue(zipValue);
+      if (!zipValue) {
         props.SetZipStatus("empty")
-      } else if (!props.zipValue.match(/^\d{3}-\d{4}$/)) {
+      } else if (!zipValue.match(/^\d{3}-\d{4}$/)) {
         props.SetZipStatus("format-incorrect")
       } else {
-        fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${props.zipValue}`)
+        fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${zipValue}`)
           .then(res => res.json())
           .then((json) => {
             if (json.results === null) {
@@ -46,7 +48,7 @@ export const ZipForm = (props: any) => {
             console.log(error)
           });
       }
-    })
+  }
  
 
   return (
@@ -58,6 +60,7 @@ export const ZipForm = (props: any) => {
           zipStatus={props.zipStatus}
           zipValue={props.zipValue}
           SetAddrValue={props.SetAddrValue}
+          SetAddrStatus={props.SetAddrStatus}
         />
 
         <label
@@ -74,10 +77,9 @@ export const ZipForm = (props: any) => {
           id="inputZipcode"
           className="form-control form-control-lg "
           placeholder="例）xxx-xxxx"
-          value={props.zipValue}
-          onChange={(ev) => {
-              props.SetZipValue(ev.target.value);
-          }}
+          defaultValue={props.zipValue}
+          onChange={onChangeHandler}
+          autoComplete="postal-code"
         />
       </div>
     </>

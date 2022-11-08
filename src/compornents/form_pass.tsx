@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/register_user.module.css'
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 
 export const passJudge = (passStatus: any) => {
-  if (passStatus === "empty") {
+  if (passStatus === "empty" || passStatus === "init") {
     let tag = document.getElementsByClassName("control-label")[5] as HTMLElement;
     tag.style.display = "inline-block"
     tag.innerHTML = "パスワードを入力してください"
@@ -18,16 +18,26 @@ export const passJudge = (passStatus: any) => {
 
 export const PassForm = (props: any) => {
 
-    useEffect(() => {
-      props.SetPassStatus("ok")
-      if (!props.passValue) {
-        props.SetPassStatus("empty")
-      } else {
-        if (!(props.passValue.length <= 16 && props.passValue.length >= 8)) {
-          props.SetPassStatus("pass-incorrect")
-        }
+  const onChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
+
+    let passValue = ev.target.value;
+    props.SetPassValue(passValue);
+    props.SetPassStatus("ok")
+    if (!passValue) {
+      props.SetPassStatus("empty")
+    } else {
+      if (!(passValue.length <= 16 && passValue.length >= 8)) {
+        props.SetPassStatus("pass-incorrect")
+
+        
       }
-    })
+    }
+    console.log(`pass/conpass: ${props.conPassValue.length} ${props.conPassValue} pass: ${passValue}`)
+    if(props.conPassValue.length !== 0 && props.conPassValue !== passValue){
+      props.SetConPassStatus("pass-mismatch")
+    }
+  }
+
 
   return (
     <>
@@ -44,13 +54,11 @@ export const PassForm = (props: any) => {
         >パスワードを入力してください</label>
         <input
           type="password"
-          autoComplete="current-password"
+          autoComplete="new-password"
           id="inputPassword"
           className="form-control form-control-lg "
           placeholder="８文字以上１６文字以内で設定してください"
-          onChange={(ev) => {
-              props.SetPassValue(ev.target.value);
-          }}
+          onChange={onChangeHandler}
         />
       </div>
     </>

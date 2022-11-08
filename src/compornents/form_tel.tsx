@@ -33,8 +33,6 @@ export const TelForm = (props: any) => {
         props.SetTelStatus("format-incorrect")
         SetErrorMessage("電話番号はXXXX-XXXX-XXXXの形式で入力してください")
       }
-
-      console.log("hello")
   }
 
 
@@ -61,9 +59,10 @@ export const TelForm = (props: any) => {
         <input
           type="text"
           id="inputTel"
-          autoComplete="username"
+          autoComplete="tel"
           className="form-control form-control-lg "
           placeholder="例）xxx-xxxx-xxxx"
+          defaultValue={props.telValue}
           onChange={onChangeHandler}
         />
       </div>

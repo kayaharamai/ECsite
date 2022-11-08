@@ -1,56 +1,107 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import useSWR, { useSWRConfig } from 'swr';
 import { Title } from "../../compornents/register_user"
-import { clear } from "../../utils/register_user_clear"
+import { clearModify } from "../../utils/register_user_clear"
 import { NameForm, nameJudge } from "../../compornents/form_name";
-import { MailForm, mailJudge } from "../../compornents/form_mail";
+import { MailForm, mailJudgeModify } from "../../compornents/form_mail";
 import { ZipForm, zipJudge } from "../../compornents/form_zip";
 import { AddrForm, addrJudge } from "../../compornents/form_address";
 import { TelForm, telJudge } from "../../compornents/form_tel";
-import { PassForm, passJudge } from "../../compornents/form_pass";
-import { ConPassForm, conPassJudge } from "../../compornents/form_conPass";
 import { Nav } from "../../compornents/nav_format";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../styles/register_user.module.css";
 import style from '../../styles/common.module.css';
+import { useNavigate } from "react-router-dom";
+
 // import { Breadcrumb } from 'compornents/breadcrumb';
+
+const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
 const Show = () => {
   const router = useRouter();
+  // const navigate = useNavigate()
+
+  const [userID, SetUserID] = React.useState('');
+
+  useEffect(() => {
+
+    const splitCookie = document.cookie.split(';');
+    const list = [];
+
+    for (let i = 0; i < splitCookie.length; i++) {
+      list.push(splitCookie[i].split('='));
+    }
+
+    list.map((number) => {
+      number.map((show) => {
+        if (show.match(/[0-9].*/)) {
+          SetUserID(show);
+        }
+      });
+    });
+
+  })
+
+  const { data, error, mutate } = useSWR(
+    `http://localhost:8000/users?id=${userID}`,
+    fetcher
+  );
 
   // 判定 フラグ
-  const [nameStatus, SetNameStatus] = React.useState("empty");
-  const [mailStatus, SetMailStatus] = React.useState("empty");
-  const [zipStatus, SetZipStatus] = React.useState("empty");
-  const [addrStatus, SetAddrStatus] = React.useState("empty");
-  const [telStatus, SetTelStatus] = React.useState("empty");
-  const [passStatus, SetPassStatus] = React.useState("empty");
-  const [conPassStatus, SetConPassStatus] = React.useState("empty");
+  const [nameStatus, SetNameStatus] = React.useState("init");
+  const [mailStatus, SetMailStatus] = React.useState("init");
+  const [zipStatus, SetZipStatus] = React.useState("init");
+  const [addrStatus, SetAddrStatus] = React.useState("init");
+  const [telStatus, SetTelStatus] = React.useState("init");
 
-  const [firstNameValue, SetFirstNameValue] = React.useState("");
   const [lastNameValue, SetLastNameValue] = React.useState("");
+  const [firstNameValue, SetFirstNameValue] = React.useState("");
   const [mailValue, SetMailValue] = React.useState("");
   const [zipValue, SetZipValue] = React.useState("");
   const [addrValue, SetAddrValue] = React.useState("");
   const [telValue, SetTelValue] = React.useState("");
-  const [passValue, SetPassValue] = React.useState("");
-  const [conPassValue, SetConPassValue] = React.useState("");
+  
+  const [clear, SetClear] = React.useState("");
 
-
-  console.log(`name:${nameStatus} mail:${mailStatus}
-  zip:${zipStatus}  addr:${addrStatus} tel:${telStatus} pass:${passStatus} conPass:${conPassStatus}`)
+  useEffect(()=>{
+    if(!!data && data.length >= 1 && clear !== "clear"){
+        const splitName = data[0].name.split('　');   
+        // console.log(splitName);    
+        if(nameStatus === "init"){
+          SetLastNameValue(splitName[0]);
+          SetFirstNameValue(splitName[1]);
+        }
+        if(mailStatus === "init"){
+          SetMailValue(data[0].mail);    
+        }
+        if(zipStatus === "init"){
+          SetZipValue(data[0].zip);
+        }
+        if(addrStatus === "init"){
+          SetAddrValue(data[0].address);
+        }
+        if(telStatus === "init"){
+          SetTelValue(data[0].tel);
+        }
+      }
+    })
+    
+    console.log(`A: ${lastNameValue}`);
+  // console.log(`name:${nameStatus} mail:${mailStatus}
+  // zip:${zipStatus}  addr:${addrStatus} tel:${telStatus}`)
 
   return (
     <div className={`${style.bodyColor} ${styles.height}`}>
 
       <div className={`container`}>
         <Head>
-          <title>ラクラクヌードル／ユーザー登録画面</title>
+          <title>ラクラクヌードル／基本情報の変更</title>
           <link rel="icon" href="/3506.png" />
         </Head>
 
-        <Nav name="新規登録画面" />
+        <Nav name="基本情報の変更" />
 
         <div className={`row ${styles.row}`}>
           <div
@@ -59,15 +110,18 @@ const Show = () => {
             <div className="well">
               <form method="post" action="#">
                 <fieldset>
-                  <Title title="ユーザー登録" />
+                  <Title title="基本情報の変更" />
 
                   <NameForm
                     SetFirstNameValue={SetFirstNameValue}
                     SetNameStatus={SetNameStatus}
                     SetLastNameValue={SetLastNameValue}
+                    lastNameValue={lastNameValue}
+                    firstNameValue={firstNameValue}
                   />
                   <MailForm
                     SetMailValue={SetMailValue}
+                    mailValue={mailValue}
                     SetMailStatus={SetMailStatus}
                   />
                   <ZipForm
@@ -89,98 +143,95 @@ const Show = () => {
                     telStatus={telStatus}
                     telValue={telValue}
                   />
-                  <PassForm
-                    SetPassStatus={SetPassStatus}
-                    SetPassValue={SetPassValue}
-                    SetConPassStatus={SetConPassStatus}
-                    conPassValue={conPassValue}
-                  />
-                  <ConPassForm
-                    SetConPassStatus={SetConPassStatus}
-                    SetConPassValue={SetConPassValue}
-                    conPassValue={conPassValue}
-                    passValue={passValue}
-                  />
 
-                  <div className="form-group   ">
-                    <button type="button" className={` ${styles.btn}`} onClick={() => {
+                  <div className="form-group ">
+                    <button type="button" className={` ${styles.btn}`} onClick={async() => {
 
                       // エラー非表示
-                      for (let i = 0; i < 7; i++) {
+                      for (let i = 0; i < 5; i++) {
                         let tag = document.getElementsByClassName("control-label")[i] as HTMLElement;
                         tag.style.display = "none"
                       }
 
                       if (
-                        nameStatus === "ok" &&
-                        mailStatus === "ok" &&
-                        zipStatus === "ok" &&
-                        telStatus === "ok" &&
-                        passStatus === "ok" &&
-                        conPassStatus === "ok"
+                        nameStatus === "ok" ||
+                        nameStatus === "init" &&
+                        mailStatus === "ok" ||
+                        mailStatus === "init" ||
+                        mailStatus === "registered" &&
+                        zipStatus === "ok" ||
+                        zipStatus === "init" &&
+                        telStatus === "ok" ||
+                        telStatus === "init" 
                       ) {
-
-                        const data = {
+                        
+                        const dataModify = {
                           name: `${lastNameValue}　${firstNameValue}`,
                           mail: mailValue,
                           zip: zipValue,
                           address: addrValue,
                           tel: telValue,
-                          pass: passValue
+                          pass: data[0].pass,
+                          id: data[0].id
                         };
 
-                        fetch(`http://localhost:8000/users`, {
+                        console.log(firstNameValue);
+                        
+                        await fetch(`http://localhost:8000/usersChange`, {
                           method: "POST",
                           headers: {
                             'Content-Type': 'application/json'
                           },
-                          body: JSON.stringify(data)
+                          body: JSON.stringify(dataModify)
                         }).then((response) => {
                           return response.json();
                         }).then((data) => {
-                          alert("登録が完了いたしました。");
-                          router.push("/login");
+                          router.push("/users/accountPage_confirm");
+                          
                         })
+
+
+                        
                         // エラー非表示
-                        for (let i = 0; i < 7; i++) {
+                        for (let i = 0; i < 5; i++) {
                           let tag = document.getElementsByClassName("control-label")[i] as HTMLElement;
                           tag.style.display = "none"
                         }
 
                         // その他
                       } else {
-                        console.log(`name:${nameStatus} mail:${mailStatus}
-                        zip:${zipStatus}  addr:${addrStatus} tel:${telStatus} pass:${passStatus} conPass:${conPassStatus}`)
+                        // console.log(`name:${nameStatus} mail:${mailStatus}
+                        // zip:${zipStatus}  addr:${addrStatus} tel:${telStatus}`)
 
                         nameJudge(nameStatus);
-                        mailJudge(mailStatus);
+                        mailJudgeModify(mailStatus);
                         zipJudge(zipStatus);
                         addrJudge(addrStatus);
                         telJudge(telStatus);
-                        passJudge(passStatus);
-                        conPassJudge(conPassStatus, passValue, conPassValue)
 
                       }
                     }
 
-                    }>登録</button>
+                    }>変更</button>
 
                     <button type="reset" className={`${styles.btnClear}`} onClick={() => {
+                      SetClear("clear");
                       SetNameStatus("empty");
                       SetMailStatus("empty");
                       SetZipStatus("empty");
                       SetAddrStatus("empty");
                       SetTelStatus("empty");
-                      SetPassStatus("empty");
-                      SetConPassStatus("empty");
+                      SetFirstNameValue("");
+                      SetLastNameValue("");
+                      SetMailValue("");
                       SetZipValue("");
+                      SetAddrValue("");
                       SetTelValue("");
-                      SetConPassValue("");
 
-                      clear();
+                      clearModify();
 
                       // エラー非表示
-                      for (let i = 0; i < 7; i++) {
+                      for (let i = 0; i < 5; i++) {
                         let tag = document.getElementsByClassName("control-label")[i] as HTMLElement;
                         tag.style.display = "none"
                       }

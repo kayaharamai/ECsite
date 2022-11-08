@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/register_user.module.css'
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 
 export const nameJudge = (nameStatus: any) => {
-  if (nameStatus === "empty") {
+  if (nameStatus === "empty" || nameStatus === "init") {
     let tag = document.getElementsByClassName("control-label")[0] as HTMLElement;
     tag.style.display = "inline-block"
     tag.innerHTML = "名前を入力してください"
@@ -12,13 +12,27 @@ export const nameJudge = (nameStatus: any) => {
 
 export const NameForm = (props: any) => {
 
-    useEffect(() => {
+  const onChangeHandlerFirstName = (ev: ChangeEvent<HTMLInputElement>) => {
+    let firstNameValue = ev.target.value;
+    props.SetFirstNameValue(firstNameValue);
+    props.SetNameStatus("ok")
+    if (!firstNameValue) {
+      props.SetNameStatus("empty")
+    }
+    
+  }
+  
+  const onChangeHandlerLastName = (ev: ChangeEvent<HTMLInputElement>) => {
+    let lastNameValue = ev.target.value;
+    props.SetLastNameValue(lastNameValue);
+    
+
       props.SetNameStatus("ok")
-      if (!props.firstNameValue || !props.lastNameValue) {
+      if (!lastNameValue) {
         props.SetNameStatus("empty")
       }
-    })
- 
+    
+  }
 
   return (
     <>
@@ -40,11 +54,9 @@ export const NameForm = (props: any) => {
               id="inputLastName"
               className="form-control form-control-lg "
               placeholder="姓"
-              onChange={(ev) => {
-                if (props.test === "true") {
-                  props.SetLastNameValue(ev.target.value)
-                }
-              }}
+              defaultValue={props.lastNameValue}
+              onChange={onChangeHandlerLastName}
+              autoComplete="family-name"
             />
           </div>
           <div className="col-sm-6">
@@ -53,9 +65,9 @@ export const NameForm = (props: any) => {
               id="inputFirstName"
               className="form-control form-control-lg "
               placeholder="名"
-              onChange={(ev) => {
-                  props.SetFirstNameValue(ev.target.value);
-              }}
+              defaultValue={props.firstNameValue}
+              onChange={onChangeHandlerFirstName}
+              autoComplete="given-name"
             />
           </div>
         </div>
