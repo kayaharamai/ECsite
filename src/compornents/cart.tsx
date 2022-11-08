@@ -188,7 +188,7 @@ function CartPage() {
             {/* <Link href={`http://localhost:3000/items/order_confirm`}> */}
             <button
               // className="btn"
-              className={`btn ${style.totalBtn}`}
+              className={` ${style.totalBtn}`}
               type="button"
               style={{ display: botan }}
               onClick={() => {

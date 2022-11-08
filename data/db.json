@@ -159,30 +159,30 @@
   ],
   "cartItems": [
     {
-      "img": "/img/15.jpg",
-      "name": "追い鰹チャーシュー",
-      "price": 1100,
+      "img": "/img/2.jpg",
+      "name": "とんこつラーメン",
+      "price": 800,
       "quantity": 1,
       "options": [],
-      "subtotal": 1100,
+      "subtotal": 800,
       "id": 1
     },
     {
-      "img": "/img/10.jpg",
-      "name": "旨辛味噌麺",
-      "price": 800,
+      "img": "/img/11.jpg",
+      "name": "鶏白湯坦々麺",
+      "price": 1080,
       "quantity": 1,
       "options": [],
-      "subtotal": 800,
+      "subtotal": 1080,
       "id": 2
     },
     {
-      "img": "/img/10.jpg",
-      "name": "旨辛味噌麺",
-      "price": 800,
+      "img": "/img/4.jpg",
+      "name": "塩ラーメン",
+      "price": 900,
       "quantity": 1,
       "options": [],
-      "subtotal": 800,
+      "subtotal": 900,
       "id": 3
     }
   ],
