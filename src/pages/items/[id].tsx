@@ -10,7 +10,7 @@ import { Nav } from '../../compornents/nav_format';
 import style from '../../styles/detail.module.css';
 import styles from '../../styles/common.module.css';
 import { Breadcrumb } from 'compornents/breadcrumb';
-
+import { Footer } from '../../compornents/footer';
 let datas = '';
 export async function getStaticProps({ params }: any) {
   const res = await fetch(
@@ -174,11 +174,11 @@ export default function ItemDetail({ items, options }: any) {
           lists={[
             {
               name: 'TOP',
-              path: '/toppage',
+              path: '/',
             },
             {
               name: '商品一覧',
-              path: '/items/itemList',
+              path: '/items',
             },
             {
               name: items.name,
@@ -190,9 +190,9 @@ export default function ItemDetail({ items, options }: any) {
           <div className={`${style.wrapper}`}>
             <div className="row">
               <div className="col-xs-offset-2 col-xs-8">
-                <h3 className={`text-center ${style.title}`}>
+                {/* <h3 className={`text-center ${style.title}`}>
                   商品詳細情報
-                </h3>
+                </h3> */}
                 {/* <div className="row">
                 <div className="col-xs-5">
                   <Image
@@ -262,6 +262,7 @@ export default function ItemDetail({ items, options }: any) {
                                         value="{option.id}"
                                         className="checks"
                                         id={`checks_${option.id}`}
+                                        key={index}
                                         // onChange={(e) => {
                                         onClick={(e) => {
                                           const optionId = option.id; // オプションのID　mapループの変数から取得
@@ -370,6 +371,7 @@ export default function ItemDetail({ items, options }: any) {
           {/* </div> */}
         </form>
       </div>
+      <Footer name="商品詳細" />
     </div>
   );
 }
