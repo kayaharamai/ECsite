@@ -1,13 +1,13 @@
 import React from 'react';
 import { Title } from "../../compornents/register_user"
 import { clear } from "../../utils/register_user_clear"
-import { NameForm, nameJudge } from "../../compornents/register_user_form_name";
-import { MailForm, mailJudge } from "../../compornents/register_user_form_mail";
-import { ZipForm, zipJudge } from "../../compornents/register_user_form_zip";
-import { AddrForm, addrJudge } from "../../compornents/register_user_form_addr";
-import { TelForm, telJudge } from "../../compornents/register_user_form_tel";
-import { PassForm, passJudge } from "../../compornents/register_user_form_pass";
-import { ConPassForm, conPassJudge } from "../../compornents/register_user_form_conPass";
+import { NameForm, nameJudge } from "../../compornents/form_name";
+import { MailForm, mailJudge } from "../../compornents/form_mail";
+import { ZipForm, zipJudge } from "../../compornents/form_zip";
+import { AddrForm, addrJudge } from "../../compornents/form_address";
+import { TelForm, telJudge } from "../../compornents/form_tel";
+import { PassForm, passJudge } from "../../compornents/form_pass";
+import { ConPassForm, conPassJudge } from "../../compornents/form_conPass";
 import { Nav } from "../../compornents/nav_format";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -20,13 +20,13 @@ const Show = () => {
   const router = useRouter();
 
   // 判定 フラグ
-  const [nameStatus, SetNameStatus] = React.useState("init");
-  const [mailStatus, SetMailStatus] = React.useState("init");
-  const [zipStatus, SetZipStatus] = React.useState("init");
-  const [addrStatus, SetAddrStatus] = React.useState("init");
-  const [telStatus, SetTelStatus] = React.useState("init");
-  const [passStatus, SetPassStatus] = React.useState("init");
-  const [conPassStatus, SetConPassStatus] = React.useState("init");
+  const [nameStatus, SetNameStatus] = React.useState("empty");
+  const [mailStatus, SetMailStatus] = React.useState("empty");
+  const [zipStatus, SetZipStatus] = React.useState("empty");
+  const [addrStatus, SetAddrStatus] = React.useState("empty");
+  const [telStatus, SetTelStatus] = React.useState("empty");
+  const [passStatus, SetPassStatus] = React.useState("empty");
+  const [conPassStatus, SetConPassStatus] = React.useState("empty");
 
   const [firstNameValue, SetFirstNameValue] = React.useState("");
   const [lastNameValue, SetLastNameValue] = React.useState("");
@@ -36,6 +36,10 @@ const Show = () => {
   const [telValue, SetTelValue] = React.useState("");
   const [passValue, SetPassValue] = React.useState("");
   const [conPassValue, SetConPassValue] = React.useState("");
+
+
+  console.log(`name:${nameStatus} mail:${mailStatus}
+  zip:${zipStatus}  addr:${addrStatus} tel:${telStatus} pass:${passStatus} conPass:${conPassStatus}`)
 
   return (
     <div className={`${style.bodyColor} ${styles.height}`}>
@@ -61,13 +65,10 @@ const Show = () => {
                     SetFirstNameValue={SetFirstNameValue}
                     SetNameStatus={SetNameStatus}
                     SetLastNameValue={SetLastNameValue}
-                    firstNameValue={firstNameValue}
-                    lastNameValue={lastNameValue}
                   />
                   <MailForm
                     SetMailValue={SetMailValue}
                     SetMailStatus={SetMailStatus}
-                    mailValue={mailValue}
                   />
                   <ZipForm
                     SetZipStatus={SetZipStatus}
@@ -75,6 +76,7 @@ const Show = () => {
                     SetAddrValue={SetAddrValue}
                     zipValue={zipValue}
                     zipStatus={zipStatus}
+                    SetAddrStatus={SetAddrStatus}
                   />
                   <AddrForm
                     SetAddrStatus={SetAddrStatus}
@@ -90,24 +92,18 @@ const Show = () => {
                   <PassForm
                     SetPassStatus={SetPassStatus}
                     SetPassValue={SetPassValue}
-                    passValue={passValue}
+                    SetConPassStatus={SetConPassStatus}
+                    conPassValue={conPassValue}
                   />
                   <ConPassForm
                     SetConPassStatus={SetConPassStatus}
                     SetConPassValue={SetConPassValue}
                     conPassValue={conPassValue}
+                    passValue={passValue}
                   />
 
                   <div className="form-group   ">
                     <button type="button" className={` ${styles.btn}`} onClick={() => {
-
-                      SetNameStatus("init");
-                      SetMailStatus("init");
-                      SetZipStatus("init");
-                      SetAddrStatus("init");
-                      SetTelStatus("init");
-                      SetPassStatus("init");
-                      SetConPassStatus("init");
 
                       // エラー非表示
                       for (let i = 0; i < 7; i++) {
@@ -125,7 +121,7 @@ const Show = () => {
                       ) {
 
                         const data = {
-                          name: `${lastNameValue} ${firstNameValue}`,
+                          name: `${lastNameValue}　${firstNameValue}`,
                           mail: mailValue,
                           zip: zipValue,
                           address: addrValue,
@@ -143,7 +139,7 @@ const Show = () => {
                           return response.json();
                         }).then((data) => {
                           alert("登録が完了いたしました。");
-                          router.push("/items/loginpage");
+                          router.push("/login");
                         })
                         // エラー非表示
                         for (let i = 0; i < 7; i++) {
@@ -170,14 +166,16 @@ const Show = () => {
                     }>登録</button>
 
                     <button type="reset" className={`${styles.btnClear}`} onClick={() => {
-                      SetNameStatus("init");
-                      SetMailStatus("init");
-                      SetZipStatus("init");
-                      SetAddrStatus("init");
-                      SetTelStatus("init");
-                      SetPassStatus("init");
-                      SetConPassStatus("init");
+                      SetNameStatus("empty");
+                      SetMailStatus("empty");
+                      SetZipStatus("empty");
+                      SetAddrStatus("empty");
+                      SetTelStatus("empty");
+                      SetPassStatus("empty");
+                      SetConPassStatus("empty");
                       SetZipValue("");
+                      SetTelValue("");
+                      SetConPassValue("");
 
                       clear();
 

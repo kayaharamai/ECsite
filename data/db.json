@@ -145,19 +145,20 @@
       "zip": "160-0022",
       "address": "東京都新宿区新宿",
       "tel": "111-1111-1111",
-      "pass": "11111111",
       "id": 1
     },
     {
-      "name": "新宿",
+      "name": "新宿　楽子",
       "mail": "rakus1@gmail.com",
       "zip": "160-0022",
-      "address": "東京都新宿区新宿",
-      "tel": "111-1111-1111",
+      "address": "東京都新宿区",
+      "tel": "222-2222-2222",
       "pass": "11111111",
       "id": 2
     }
   ],
-  "cartItems": [],
-  "payStatus": []
+  "cartItems": [
+  ],
+  "payStatus": [],
+  "usersChange": []
 }

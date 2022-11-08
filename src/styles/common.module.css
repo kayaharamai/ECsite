@@ -1,8 +1,8 @@
 /* 全体背景色 */
 .bodyColor {
   /* /* background-image: url(/public/img/back.jpg);  */
-  /* background-color: #faf7d2; */
-  background-image: url(../../public/back.jpg);
+  background-color: #f7f3ed;
+  /* background-image: url(../../public/back.jpg); */
   background-repeat: repeat;
   background-size: cover;
 }

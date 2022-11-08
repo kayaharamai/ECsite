@@ -22,7 +22,7 @@ export const Nav = (props: { name: string }) => {
     },
     {
       name: 'アカウント',
-      url: '#',
+      url: '/users/accountPage',
     },
     {
       name: 'ログイン',
@@ -33,6 +33,8 @@ export const Nav = (props: { name: string }) => {
   const [cookie, setCookie] = useState('');
   const [userID, SetUserID] = useState('');
   const [buttonDisplay, setButtonDisplay] = useState('none');
+  
+  const [hamburgerMenueFlag ,setHamburgerMenueFlag] = useState(false);
 
   const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
@@ -60,7 +62,7 @@ export const Nav = (props: { name: string }) => {
       });
     });
   }, []);
-
+  
   const { data, error, mutate } = useSWR(
     `http://localhost:8000/users?id=${userID}`,
     fetcher
@@ -88,10 +90,11 @@ export const Nav = (props: { name: string }) => {
     router.push('/');
   };
 
+
   return (
     <>
       <nav
-        className={`navbar navbar-expand-lg fixed-top bg-light　w-75 ${styles.nav}`}
+        className={`navbar navbar-expand-lg fixed-top bg-light w-75 ${styles.nav}`}
       >
         <div className="container">
           <Link className="navbar-brand" href="/">
@@ -113,6 +116,14 @@ export const Nav = (props: { name: string }) => {
             aria-controls="Navber"
             aria-expanded="false"
             aria-label="ナビゲーションの切替"
+            onClick={()=>{
+              if(hamburgerMenueFlag === false){
+                setHamburgerMenueFlag(true)
+              }else{
+                setHamburgerMenueFlag(false)
+              }
+            }}
+            
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -162,7 +173,75 @@ export const Nav = (props: { name: string }) => {
             </ul>
           </div>
         </div>
+      <HamburgerMenueOpen 
+      hamburgerMenueFlag={hamburgerMenueFlag}
+      nameValue={nameValue}
+      pageList={pageList}
+      name={props.name}
+      cookie={cookie}
+      logoutClick={logoutClick}
+      buttonDisplay={buttonDisplay}
+      />
       </nav>
     </>
+    
   );
 };
+
+const HamburgerMenueOpen = (props :any) =>{
+
+  if(props.hamburgerMenueFlag === true){
+
+    return(
+      <div className={` bg-light 
+      bg-light  zindex-tooltip`}>
+    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li>
+        こんにちは&nbsp;&nbsp;&nbsp;{props.nameValue}&nbsp;さん
+      </li>
+
+      {props.pageList.map((page:any, index:number) => {
+        if (props.name !== page.name) {
+          if (
+            props.cookie.includes('userId') &&
+            page.name !== 'ログイン'
+          ) {
+            return (
+              <li className="nav-item" key={index}>
+                <Link href={`${page.url}`}>
+                  <a className="nav-link">{page.name}</a>
+                </Link>
+              </li>
+            );
+          }
+          if (props.cookie === '') {
+            return (
+              <li className="nav-item" key={index}>
+                <Link href={`${page.url}`}>
+                  <a className="nav-link">{page.name}</a>
+                </Link>
+              </li>
+            );
+          } else {
+            // setButtonDisplay('none');
+          }
+        }
+      })}
+      <li>
+        <button
+          onClick={props.logoutClick}
+          className={`${styles.clickbtn} `}
+          style={{ display: props.buttonDisplay }}
+          >
+          ログアウト
+        </button>
+      </li>
+    </ul>
+  </div>
+  );
+}else {
+  return <></>
+}
+}
+
+// className={` nav-link btn btn-link text-decoration-none ${styles.clickbtn} `}
