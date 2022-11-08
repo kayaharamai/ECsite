@@ -158,7 +158,35 @@
       "id": 2
     }
   ],
-  "cartItems": [],
+  "cartItems": [
+    {
+      "img": "/img/2.jpg",
+      "name": "とんこつラーメン",
+      "price": 800,
+      "quantity": 1,
+      "options": [],
+      "subtotal": 800,
+      "id": 1
+    },
+    {
+      "img": "/img/11.jpg",
+      "name": "鶏白湯坦々麺",
+      "price": 1080,
+      "quantity": 1,
+      "options": [],
+      "subtotal": 1080,
+      "id": 2
+    },
+    {
+      "img": "/img/4.jpg",
+      "name": "塩ラーメン",
+      "price": 900,
+      "quantity": 1,
+      "options": [],
+      "subtotal": 900,
+      "id": 3
+    }
+  ],
   "payStatus": [
     {
       "pay": "2:入金済",

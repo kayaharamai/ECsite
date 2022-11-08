@@ -57,13 +57,14 @@ function Page() {
         <link rel="icon" href="/3506.png" />
       </Head>
       <div className={`${styles.bodyColor}`}>
+        {/* <div className="container"> */}
         <div className="container">
           <Nav name="商品一覧" />
           <Breadcrumb
             lists={[
               {
                 name: 'TOP',
-                path: '/toppage',
+                path: '/',
               },
               {
                 name: '商品一覧',
@@ -140,11 +141,13 @@ function Page() {
             該当の商品がありません
           </p>
           <div className={`${style.row}`}>
-            <div
+            {/* <div> */}
+            {/* <div
               className={`table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12 ${style.mannaka}`}
-            >
-              <table className="table table-striped item-list-table">
-                {/* <thead>
+            > */}
+            {/* <table className="table table-striped item-list-table"> */}
+            {/* <table className=""> */}
+            {/* <thead>
           <tr>
             <th className="haba">画像</th>
             <th className="haba">商品名</th>
@@ -153,90 +156,93 @@ function Page() {
         </thead>
          */}
 
-                <tbody>
-                  <div className={`${style.wrapper}`}>
-                    {!search?.length &&
-                      data.map((item: any) => {
-                        return (
-                          <tr className="flexbox flexbox-center">
-                            <td className="imag">
-                              <Link
-                                href={`http://localhost:3000/items/${item.id}`}
-                              >
-                                <a>
-                                  {' '}
-                                  <Image
-                                    src={item.img}
-                                    width={200}
-                                    height={143}
-                                    className={`img-responsive img-rounded item-img-cente ${style.img} `}
-                                  />
-                                </a>
-                              </Link>
-                            </td>
-                            <Link
-                              href={`http://localhost:3000/items/${item.id}`}
+            <tbody>
+              {/* <div className={`${style.wrapper}`}> */}
+              <div className={`${style.wrapper}`}>
+                {!search?.length &&
+                  data.map((item: any) => {
+                    return (
+                      <tr className="flexbox flexbox-center">
+                        <td className="imag">
+                          <Link
+                            href={`http://localhost:3000/items/${item.id}`}
+                          >
+                            <a>
+                              <Image
+                                src={item.img}
+                                width={200}
+                                height={143}
+                                className={`img-responsive img-rounded item-img-cente ${style.img} `}
+                              />
+                            </a>
+                          </Link>
+                        </td>
+                        <Link
+                          href={`http://localhost:3000/items/${item.id}`}
+                        >
+                          <div>
+                            <td
+                              className={`${style.haha} haba no-underline`}
                             >
-                              <div>
-                                <td
-                                  className={`${style.haha} haba no-underline`}
-                                >
-                                  {item.name}
-                                </td>
-                              </div>
-                            </Link>
-                            <td className="haba">
-                              {item.price.toLocaleString()}円
+                              {item.name}
                             </td>
-                          </tr>
-                        );
-                      })}
-                  </div>
+                          </div>
+                        </Link>
+                        <td className="haba">
+                          {item.price.toLocaleString()}円
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </div>
 
-                  <div className={`${style.wrapper}`}>
-                    {search?.length > 0 &&
-                      search.map((item: any) => {
-                        // let number = index + 1 ;
-                        return (
-                          <tr className="flexbox flexbox-center">
-                            <td className="imag">
-                              <Link
-                                href={`http://localhost:3000/items/${item.id}`}
-                              >
-                                <a>
-                                  <Image
-                                    src={item.img}
-                                    width={200}
-                                    height={143}
-                                    className={`img-responsive img-rounded item-img-cente ${style.img} `}
-                                  />
-                                </a>
-                              </Link>
-                            </td>
-                            <Link
-                              href={`http://localhost:3000/items/${item.id}`}
+              {/* <div className={`${style.wrapper}`}> */}
+              <div>
+                {search?.length > 0 &&
+                  search.map((item: any) => {
+                    // let number = index + 1 ;
+                    return (
+                      // <tr className="flexbox flexbox-center">
+                      <tr>
+                        {/* <td className="imag"> */}
+                        <td className="imag">
+                          <Link
+                            href={`http://localhost:3000/items/${item.id}`}
+                          >
+                            <a>
+                              <Image
+                                src={item.img}
+                                width={200}
+                                height={143}
+                                // className={`img-responsive img-rounded item-img-cente ${style.img} `}
+                              />
+                            </a>
+                          </Link>
+                        </td>
+                        <Link
+                          href={`http://localhost:3000/items/${item.id}`}
+                        >
+                          <div>
+                            <td
+                              className={`${style.haha} haba no-underline`}
                             >
-                              <div>
-                                <td
-                                  className={`${style.haha} haba no-underline`}
-                                >
-                                  {item.name}
-                                </td>
-                              </div>
-                            </Link>
-                            <td className="haba">
-                              {item.price.toLocaleString()}円
+                              {item.name}
                             </td>
-                          </tr>
-                        );
-                      })}
-                  </div>
-                </tbody>
-              </table>
-            </div>
+                          </div>
+                        </Link>
+                        <td className="haba">
+                          {item.price.toLocaleString()}円
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </div>
+            </tbody>
+            {/* </table> */}
           </div>
         </div>
       </div>
+      {/* </div> */}
     </>
   );
 }

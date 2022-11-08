@@ -174,11 +174,11 @@ export default function ItemDetail({ items, options }: any) {
           lists={[
             {
               name: 'TOP',
-              path: '/toppage',
+              path: '/',
             },
             {
               name: '商品一覧',
-              path: '/items/itemList',
+              path: '/items',
             },
             {
               name: items.name,
@@ -190,9 +190,9 @@ export default function ItemDetail({ items, options }: any) {
           <div className={`${style.wrapper}`}>
             <div className="row">
               <div className="col-xs-offset-2 col-xs-8">
-                <h3 className={`text-center ${style.title}`}>
+                {/* <h3 className={`text-center ${style.title}`}>
                   商品詳細情報
-                </h3>
+                </h3> */}
                 {/* <div className="row">
                 <div className="col-xs-5">
                   <Image
