@@ -1,9 +1,12 @@
+/* eslint-disable jsx-a11y/alt-text */
 import Image from 'next/image';
 import { Nav } from '../compornents/nav_format';
+import 'bootstrap/dist/css/bootstrap.min.css';
+// import style from '../styles/login.module.css';
 import { Footer } from '../compornents/footer';
 // import style from '../styles/login.module.css';
 import styles from '../styles/common.module.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Head from 'next/head';
 import { Swiper, SwiperSlide } from 'swiper/react'; //カルーセル用のタグをインポート
 import SwiperCore, { Pagination, Autoplay, EffectFade } from 'swiper'; //使いたい機能をインポート
@@ -17,6 +20,7 @@ const TopPage = () => {
   return (
     <>
       <div className={`${styles.bodyColor}`}>
+      
         <div className="container">
           <Head>
             <title>ラクラクヌードル</title>

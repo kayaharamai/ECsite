@@ -60,7 +60,9 @@
 }
 .passicon {
   width: 25px;
-  position: absolute;
-  right: 525px;
+  position: relative;
+  transform:translateX(-30px);
+  /* right: 525px;
   top: 357px;
+  display: block; */
 }

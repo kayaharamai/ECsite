@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
@@ -50,6 +51,7 @@ function Page() {
     return a.price < b.price ? -1 : 1;
   });
 
+
   return (
     <>
       <Head>
@@ -71,7 +73,7 @@ function Page() {
                 path: '/items/itemList',
               },
             ]}
-          />
+          />          
 
           <div className={`${style.row}`}>
             <div
@@ -162,7 +164,7 @@ function Page() {
                 {!search?.length &&
                   data.map((item: any) => {
                     return (
-                      <tr className="flexbox flexbox-center">
+                      <tr className="flexbox flexbox-center" key={item.id}>
                         <td className="imag">
                           <Link
                             href={`http://localhost:3000/items/${item.id}`}
@@ -203,7 +205,7 @@ function Page() {
                     // let number = index + 1 ;
                     return (
                       // <tr className="flexbox flexbox-center">
-                      <tr>
+                      <tr key={item.id}>
                         {/* <td className="imag"> */}
                         <td className="imag">
                           <Link
