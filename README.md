@@ -1,34 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 開発概要
 
-## Getting Started
+架空のラーメン EC サイトを作成しました。
 
-First, run the development server:
+既存のユースケースから、役割分担し、実装を行いました。
+![商品一覧ページ](/public/img/itempage.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+![ユーザー登録ページ](/public/img/user.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## サイト構成
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+・index.tsx トップページ
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+・/items/index.tsx 　商品一覧ページ
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+・/items/[id]　商品詳細ページ
 
-## Learn More
+・/carts/cartPage 　ショッピングカートページ
 
-To learn more about Next.js, take a look at the following resources:
+・/login/index.tsx ログインページ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+・/user/register.tsx ユーザー登録ページ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 使用した技術
 
-## Deploy on Vercel
+使用した言語：Javascript,Typescript
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+フレームワーク:Next.js
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+その他・ツール:Git,VSCode

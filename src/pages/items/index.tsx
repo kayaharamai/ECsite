@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import style from '../../styles/itemList.module.css';
 import styles from '../../styles/common.module.css';
 import { Breadcrumb } from 'compornents/breadcrumb';
-
+import { Footer } from '../../compornents/footer';
 const fetcher = (url: any) => fetch(url).then((res) => res.json());
 function Page() {
   const { data, error } = useSWR(
@@ -243,6 +243,7 @@ function Page() {
         </div>
       </div>
       {/* </div> */}
+      <Footer name="商品一覧" />
     </>
   );
 }

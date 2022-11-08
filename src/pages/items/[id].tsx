@@ -10,7 +10,7 @@ import { Nav } from '../../compornents/nav_format';
 import style from '../../styles/detail.module.css';
 import styles from '../../styles/common.module.css';
 import { Breadcrumb } from 'compornents/breadcrumb';
-
+import { Footer } from '../../compornents/footer';
 let datas = '';
 export async function getStaticProps({ params }: any) {
   const res = await fetch(
@@ -262,6 +262,7 @@ export default function ItemDetail({ items, options }: any) {
                                         value="{option.id}"
                                         className="checks"
                                         id={`checks_${option.id}`}
+                                        key={index}
                                         // onChange={(e) => {
                                         onClick={(e) => {
                                           const optionId = option.id; // オプションのID　mapループの変数から取得
@@ -370,6 +371,7 @@ export default function ItemDetail({ items, options }: any) {
           {/* </div> */}
         </form>
       </div>
+      <Footer name="商品詳細" />
     </div>
   );
 }
