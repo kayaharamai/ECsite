@@ -166,5 +166,3 @@ export const Nav = (props: { name: string }) => {
     </>
   );
 };
-
-// className={` nav-link btn btn-link text-decoration-none ${styles.clickbtn} `}

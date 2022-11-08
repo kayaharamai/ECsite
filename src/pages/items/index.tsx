@@ -11,6 +11,7 @@ import style from '../../styles/itemList.module.css';
 import styles from '../../styles/common.module.css';
 import { Breadcrumb } from 'compornents/breadcrumb';
 
+
 const fetcher = (url: any) => fetch(url).then((res) => res.json());
 function Page() {
   const { data, error } = useSWR(
@@ -50,6 +51,7 @@ function Page() {
     return a.price < b.price ? -1 : 1;
   });
 
+
   return (
     <>
       <Head>
@@ -70,7 +72,7 @@ function Page() {
                 path: '/items/itemList',
               },
             ]}
-          />
+          />          
 
           <div className={`${style.row}`}>
             <div

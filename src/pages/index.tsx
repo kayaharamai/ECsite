@@ -1,14 +1,16 @@
 import Image from 'next/image';
 import { Nav } from '../compornents/nav_format';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import style from '../styles/login.module.css';
 import styles from '../styles/common.module.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Head from 'next/head';
 
 const TopPage = () => {
   return (
     <>
       <div className={`${styles.bodyColor}`}>
+      
         <div className="container">
           <Head>
             <title>ラクラクヌードル</title>
