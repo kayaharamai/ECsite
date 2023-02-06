@@ -42,7 +42,7 @@ export const ShoppingCart = () => {
       </>
     );
   mutate();
-  // console.log(data[0].options)
+ 
   return (
     <div className={`row  ${style.row}`}>
       <div className="table-responsive col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">

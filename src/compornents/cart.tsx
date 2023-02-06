@@ -64,7 +64,8 @@ function CartPage() {
                   style={{ display: botan }}
                   // id="total-price"
                 >
-                  ご注文金額合計：{totalPrice.toLocaleString()}円 (税込)
+                  ご注文金額合計：{totalPrice.toLocaleString()}円
+                  (税込)
                 </span>
               </div>
             </div>
@@ -76,14 +77,8 @@ function CartPage() {
   return (
     <>
       <Head>
-        <title>ラクスヌードル</title>
+        <title>ラクラクヌードル／ショッピングカート</title>
       </Head>
-
-
-   
-  
-
-
 
       <div className={`${styles.bodyColor}`}>
         <div className={`${style.wrapper}`}>
@@ -101,7 +96,6 @@ function CartPage() {
              <div> <th style={{ display: botan }}className="cart-table-th">小計</th></div>
             </tr>
           </thead> */}
-    
 
               <tbody>
                 {data.map((cartitem: any) => {
@@ -122,7 +116,8 @@ function CartPage() {
                         <span className="price">
                           {/* &nbsp;{cartitem.size} */}
                         </span>
-                        {cartitem.price.toLocaleString()}円 {cartitem.quantity}個
+                        {cartitem.price.toLocaleString()}円{' '}
+                        {cartitem.quantity}個
                       </td>
 
                       <td>
@@ -132,7 +127,8 @@ function CartPage() {
                             return (
                               // <li key={index}>{option}&nbsp;200円</li>
                               <li key={index}>
-                                {option?.name}: {option?.price.toLocaleString()}円 ×
+                                {option?.name}:{' '}
+                                {option?.price.toLocaleString()}円 ×
                                 {option?.quantity}
                               </li>
                             );
@@ -192,16 +188,16 @@ function CartPage() {
             {/* <Link href={`http://localhost:3000/items/order_confirm`}> */}
             <button
               // className="btn"
-              className={`btn ${style.totalBtn}`}
+              className={` ${style.totalBtn}`}
               type="button"
               style={{ display: botan }}
               onClick={() => {
                 let cookie = document.cookie;
                 if (cookie.includes('userId')) {
-                  router.push('/items/order_confirm');
+                  router.push('/carts/order_confirm');
                 } else {
-                  router.push('/items/loginpage');
-                  document.cookie = 'status=shopping';
+                  router.push('/login');
+                  document.cookie = 'status=shopping; path=/;';
                 }
               }}
             >
@@ -209,7 +205,7 @@ function CartPage() {
             </button>
             {/* </Link> */}
           </div>
-          <p id="noneItem" style={{ display: moji }} >
+          <p id="noneItem" style={{ display: moji }}>
             カートに商品がありません
           </p>
         </div>

@@ -140,33 +140,25 @@
   ],
   "users": [
     {
-      "name": "name",
-      "mail": "mail@mail.com",
-      "zip": "123-1234",
-      "address": "神奈川県",
-      "tel": "080-1234-1234",
-      "pass": "pass12345678",
+      "name": "新宿　楽子",
+      "mail": "rakus@gmail.com",
+      "zip": "160-0022",
+      "address": "東京都新宿区新宿",
+      "tel": "111-1111-1111",
       "id": 1
     },
     {
-      "name": "name",
-      "mail": "mail@gmail.com",
-      "zip": "123-1234",
-      "address": "東京都",
-      "tel": "090-1234-1234",
-      "pass": "passpass",
-      "id": 2
-    },
-    {
-      "name": "yasuo",
-      "mail": "yasuo@gmail.com",
-      "zip": "132-0035",
-      "address": "東京都江戸川区平井",
-      "tel": "090-0000-0000",
+      "name": "新宿　楽子",
+      "mail": "rakus1@gmail.com",
+      "zip": "160-0022",
+      "address": "東京都新宿区",
+      "tel": "222-2222-2222",
       "pass": "11111111",
-      "id": 3
+      "id": 2
     }
   ],
-  "cartItems": [],
-  "payStatus": []
+  "cartItems": [
+  ],
+  "payStatus": [],
+  "usersChange": []
 }

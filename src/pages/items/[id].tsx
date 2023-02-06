@@ -9,6 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav } from '../../compornents/nav_format';
 import style from '../../styles/detail.module.css';
 import styles from '../../styles/common.module.css';
+import { Breadcrumb } from 'compornents/breadcrumb';
+import { Footer } from '../../compornents/footer';
+let datas = '';
 export async function getStaticProps({ params }: any) {
   const res = await fetch(
     `http://localhost:8000/items/${params.id} `
@@ -97,7 +100,7 @@ export default function ItemDetail({ items, options }: any) {
   //     optionTotalPrice += selectOptions[id];
   //   }
   // }
-
+  let datas = '';
   const onClickCreate = () => {
     // let optionTotalPrice = 0;
     // for (const id in selectOptions) {
@@ -119,6 +122,7 @@ export default function ItemDetail({ items, options }: any) {
     //         quantity: count,
     //       };
     //     });
+
     const optionsArray = Object.entries(selectOptions)
       .filter(([id, selected]) => selected)
       .map(([id, selected]) => {
@@ -147,10 +151,16 @@ export default function ItemDetail({ items, options }: any) {
       }),
     })
       .then((res) => res.json)
+      .then((data) => {
+        datas = data.name;
+        console.log(data.name);
+      })
       .catch((error) => {
         console.error(error);
       });
   };
+
+  console.log(datas);
 
   return (
     <div className={`${styles.bodyColor}`}>
@@ -160,13 +170,29 @@ export default function ItemDetail({ items, options }: any) {
           <link rel="icon" href="/3506.png" />
         </Head>
         <Nav name="" />
+        <Breadcrumb
+          lists={[
+            {
+              name: 'TOP',
+              path: '/',
+            },
+            {
+              name: '商品一覧',
+              path: '/items',
+            },
+            {
+              name: items.name,
+              path: '/',
+            },
+          ]}
+        />
         <form action="cart_list.html">
           <div className={`${style.wrapper}`}>
             <div className="row">
               <div className="col-xs-offset-2 col-xs-8">
-                <h3 className={`text-center ${style.title}`}>
+                {/* <h3 className={`text-center ${style.title}`}>
                   商品詳細情報
-                </h3>
+                </h3> */}
                 {/* <div className="row">
                 <div className="col-xs-5">
                   <Image
@@ -236,6 +262,7 @@ export default function ItemDetail({ items, options }: any) {
                                         value="{option.id}"
                                         className="checks"
                                         id={`checks_${option.id}`}
+                                        key={index}
                                         // onChange={(e) => {
                                         onClick={(e) => {
                                           const optionId = option.id; // オプションのID　mapループの変数から取得
@@ -327,7 +354,7 @@ export default function ItemDetail({ items, options }: any) {
                 <div className="col-xs-offset-2 col-xs-3">
                   <div className="form-group">
                     <p className={`${style.btnCenter}`}>
-                      <Link href="http://localhost:3000/items/cartPage">
+                      <Link href="http://localhost:3000/carts/cartPage">
                         <button
                           className={`${style.btnDatail}`}
                           onClick={() => onClickCreate()}
@@ -344,6 +371,7 @@ export default function ItemDetail({ items, options }: any) {
           {/* </div> */}
         </form>
       </div>
+      <Footer name="商品詳細" />
     </div>
   );
 }

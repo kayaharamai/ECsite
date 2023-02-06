@@ -1,39 +1,48 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/register_user.module.css';
-import React, { useState, useEffect} from 'react';
-import { useRouter } from "next/router";
-import useSWR, { useSWRConfig } from 'swr'
-
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import useSWR, { useSWRConfig } from 'swr';
 
 export const Nav = (props: { name: string }) => {
   const router = useRouter();
   const pageList = [
     {
+      name: '商品一覧',
+      url: '/items/',
+    },
+    {
       name: 'ショッピングカート',
-      url: '/items/cartPage',
+      url: '/carts/cartPage',
     },
     {
       name: '新規登録画面',
-      url: '/items/register_user',
+      url: '/users/register_user',
+    },
+    {
+      name: 'アカウント',
+      url: '/users/accountPage',
     },
     {
       name: 'ログイン',
-      url: '/items/loginpage',
+      url: '/login',
     },
   ];
 
   const [cookie, setCookie] = useState('');
-  const [cookieuser, setCookieUser] = useState('');
   const [userID, SetUserID] = useState('');
+  const [buttonDisplay, setButtonDisplay] = useState('none');
+  
+  const [hamburgerMenueFlag ,setHamburgerMenueFlag] = useState(false);
 
   const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
   useEffect(() => {
-    let cookie2 = document.cookie
-    if(cookie2.includes('userId')){
-        setCookie(document.cookie);
-        // console.log(document.cookie);
+    let cookie2 = document.cookie;
+    if (cookie2.includes('userId')) {
+      setCookie(document.cookie);
+      setButtonDisplay('block');
     } else {
       // console.log('cookieがありません')
     }
@@ -53,7 +62,7 @@ export const Nav = (props: { name: string }) => {
       });
     });
   }, []);
-
+  
   const { data, error, mutate } = useSWR(
     `http://localhost:8000/users?id=${userID}`,
     fetcher
@@ -71,92 +80,168 @@ export const Nav = (props: { name: string }) => {
   }
 
   const logoutClick = () => {
-    document.cookie = 'userId=; max-age=0';
-    document.cookie = 'userName=; max-age=0';
+    document.cookie = 'userId=; max-age=0; path=/';
 
     let cookie = document.cookie;
 
     if (cookie.includes('status=shopping')) {
-      document.cookie = 'status=shopping; max-age=0';
+      document.cookie = 'status=shopping; max-age=0; path=/';
     }
-    router.push("/items/itemList");
-
+    router.push('/');
   };
 
+
   return (
-    <nav className={`navbar navbar-expand-lg bg-light ${styles.nav}`}>
-      <div className="container-fluid">
-        <Link className="navbar-brand" href="/items/itemList">
-          {/* 企業ロゴ   */}
-          <a>
-            <Image
-              alt="main log"
-              src="/img/header_logo.png"
-              height={35}
-              width={138}
-            />
-          </a>
-        </Link>
-        <button
-          type="button"
-          className="navbar-toggler"
-          data-bs-toggle="collapse"
-          data-bs-target="#Navber"
-          aria-controls="Navber"
-          aria-expanded="false"
-          aria-label="ナビゲーションの切替"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="Navber">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-
-            <li className={styles.show}>こんにちは&nbsp;&nbsp;&nbsp;{nameValue}&nbsp;さん</li>
-
-            {pageList.map((page, index) => {
-              if (props.name !== page.name) {
-                if (
-                  cookie.includes('userId') &&
-                  page.name !== 'ログイン'
-                ) {
-                  return (
-                    <li className="nav-item" key={index}>
-                      <Link href={`${page.url}`}>
-                        <a className="nav-link">{page.name}</a>
-                      </Link>
-                    </li>
-                  );
-                }
-                if (cookie === '') {
-                  return (
-                    <li className="nav-item" key={index}>
-                      <Link href={`${page.url}`}>
-                        <a className="nav-link">{page.name}</a>
-                      </Link>
-                    </li>
-                  );
-                }
+    <>
+      <nav
+        className={`navbar navbar-expand-lg fixed-top bg-light w-75 ${styles.nav}`}
+      >
+        <div className="container">
+          <Link className="navbar-brand" href="/">
+            {/* 企業ロゴ   */}
+            <a>
+              <Image
+                alt="main log"
+                src="/img/header_logo.png"
+                height={35}
+                width={138}
+              />
+            </a>
+          </Link>
+          <button
+            type="button"
+            className="navbar-toggler"
+            data-bs-toggle="collapse"
+            data-bs-target="#Navber"
+            aria-controls="Navber"
+            aria-expanded="false"
+            aria-label="ナビゲーションの切替"
+            onClick={()=>{
+              if(hamburgerMenueFlag === false){
+                setHamburgerMenueFlag(true)
+              }else{
+                setHamburgerMenueFlag(false)
               }
-            })}
-            <li>
+            }}
+            
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
-              <button onClick={logoutClick} className={` nav-link btn btn-link text-decoration-none `} >
-              {/* <Link href={'/items/logout'} ><a className={`${styles.navLink}`}> */}
+          <div className="collapse navbar-collapse" id="Navber">
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li className={styles.show}>
+                こんにちは&nbsp;&nbsp;&nbsp;{nameValue}&nbsp;さん
+              </li>
 
-                ログアウト
-                {/* </a></Link> */}
-              </button>
-            </li>
-          </ul>
+              {pageList.map((page, index) => {
+                if (props.name !== page.name) {
+                  if (
+                    cookie.includes('userId') &&
+                    page.name !== 'ログイン'
+                  ) {
+                    return (
+                      <li className="nav-item" key={index}>
+                        <Link href={`${page.url}`}>
+                          <a className="nav-link">{page.name}</a>
+                        </Link>
+                      </li>
+                    );
+                  }
+                  if (cookie === '') {
+                    return (
+                      <li className="nav-item" key={index}>
+                        <Link href={`${page.url}`}>
+                          <a className="nav-link">{page.name}</a>
+                        </Link>
+                      </li>
+                    );
+                  } else {
+                    // setButtonDisplay('none');
+                  }
+                }
+              })}
+              <li>
+                <button
+                  onClick={logoutClick}
+                  className={`${styles.clickbtn} `}
+                  style={{ display: buttonDisplay }}
+                >
+                  ログアウト
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-
-      {/* <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-        crossOrigin="anonymous"
-      ></script> */}
-    </nav>
+      <HamburgerMenueOpen 
+      hamburgerMenueFlag={hamburgerMenueFlag}
+      nameValue={nameValue}
+      pageList={pageList}
+      name={props.name}
+      cookie={cookie}
+      logoutClick={logoutClick}
+      buttonDisplay={buttonDisplay}
+      />
+      </nav>
+    </>
+    
   );
 };
+
+const HamburgerMenueOpen = (props :any) =>{
+
+  if(props.hamburgerMenueFlag === true){
+
+    return(
+      <div className={` bg-light 
+      bg-light  zindex-tooltip`}>
+    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li>
+        こんにちは&nbsp;&nbsp;&nbsp;{props.nameValue}&nbsp;さん
+      </li>
+
+      {props.pageList.map((page:any, index:number) => {
+        if (props.name !== page.name) {
+          if (
+            props.cookie.includes('userId') &&
+            page.name !== 'ログイン'
+          ) {
+            return (
+              <li className="nav-item" key={index}>
+                <Link href={`${page.url}`}>
+                  <a className="nav-link">{page.name}</a>
+                </Link>
+              </li>
+            );
+          }
+          if (props.cookie === '') {
+            return (
+              <li className="nav-item" key={index}>
+                <Link href={`${page.url}`}>
+                  <a className="nav-link">{page.name}</a>
+                </Link>
+              </li>
+            );
+          } else {
+            // setButtonDisplay('none');
+          }
+        }
+      })}
+      <li>
+        <button
+          onClick={props.logoutClick}
+          className={`${styles.clickbtn} `}
+          style={{ display: props.buttonDisplay }}
+          >
+          ログアウト
+        </button>
+      </li>
+    </ul>
+  </div>
+  );
+}else {
+  return <></>
+}
+}
+
+// className={` nav-link btn btn-link text-decoration-none ${styles.clickbtn} `}

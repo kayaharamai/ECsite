@@ -1,0 +1,31 @@
+.imagecontainer {
+  display: flex;
+}
+
+.ttl {
+  margin: 100px 0;
+  text-align: center;
+  font-size: 34px;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.flexwrap {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 100px;
+}
+.btn {
+  width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #d9534f;
+  border-color: #d9534f;
+  border-radius: 10px;
+}
+.center {
+  text-align: center;
+}

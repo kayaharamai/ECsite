@@ -6,50 +6,12 @@ import { useState } from "react"
 import style from "../styles/register_user.module.css";
 
 
-
 export const Title = (props: { title: string }) => {
   return (
     <h1 className={style.titleA}>{props.title}</h1>
   );
 }
 
-export const Btn = (props: { item: string }) => {
-  if (props.item === "郵便番号") {
-    return (<input type="button" value="住所検索" className={style.btnSearch} onClick={() => {
-      let getZipId = document.getElementById('inputZipcode') as HTMLInputElement;
-      let getAddrId = document.getElementById('inputAddress') as HTMLInputElement;
-      let tag = document.getElementsByClassName("control-label")[2] as HTMLElement;
-      tag.style.display = "none"
-
-      if (getZipId.value) {
-        if (!(getZipId.value.match(/^\d{3}-\d{4}$/))) {
-          let tag = document.getElementsByClassName("control-label")[2] as HTMLElement;
-          tag.style.display = "inline-block"
-          tag.innerHTML = "郵便番号はXXX-XXXXの形式で入力してください"
-        } else {
-          fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${getZipId?.value}`)
-            .then(response => response.json())
-            .then((json) => {
-              getAddrId.value = `${json.results[0].address1}${json.results[0].address2}${json.results[0].address3}`;
-              let tag = document.getElementsByClassName("control-label")[3] as HTMLElement;
-              tag.style.display = "none"
-            })
-            .catch((error) => {
-              let tag = document.getElementsByClassName("control-label")[2] as HTMLElement;;
-              tag.style.display = "inline-block"
-              tag.innerHTML = "この郵便番号は存在しません"
-            });
-        }
-      } else {
-        let tag = document.getElementsByClassName("control-label")[2] as HTMLElement;
-        tag.style.display = "inline-block"
-        tag.innerHTML = "郵便番号を入力してください"
-      }
-    }} />);
-  } else {
-    return null;
-  }
-}
 
 
 export const BtnSearch = (props: { item: string }) => {

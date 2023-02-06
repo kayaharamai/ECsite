@@ -18,7 +18,7 @@ export default function LoginApi(
       console.log(data);
       console.log(data[0].id);
       if (data.length === 1) {
-        res.setHeader('Set-Cookie', [`userId=${data[0].id}; max-age=86400; path=/items;`]);
+        res.setHeader('Set-Cookie', [`userId=${data[0].id}; max-age=86400; path=/;`]);
         res.status(200).json('OK');
       } else if (data.length < 2) {
         console.log('複数取得されました');

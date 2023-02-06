@@ -30,6 +30,8 @@
 .totalBtn {
   width: 300px;
   margin: 50px auto;
-  background-color: #ffc107;
   padding: 20px;
+  background-color: #d9534f;
+  border-color: #d9534f;
+  border-radius: 10px;
 }
